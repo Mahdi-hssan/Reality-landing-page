@@ -1,0 +1,11 @@
+#!/bin/sh
+# Blocks the push if the production build fails (type errors, build errors).
+# Bypass in an emergency with: git push --no-verify
+
+echo "pre-push: running production build..."
+if ! bun run build; then
+  echo ""
+  echo "pre-push: BUILD FAILED - push blocked. Fix the errors above and push again."
+  exit 1
+fi
+echo "pre-push: build OK, pushing."
