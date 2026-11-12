@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Tailwind v4 resets buttons to the arrow cursor. Everything clickable gets the hand. */
+@layer base {
+  button:not(:disabled),
+  [role='button'],
+  [role='tab'],
+  summary,
+  select,
+  label[for],
+  input[type='checkbox'],
+  input[type='radio'],
+  input[type='submit'],
+  .sp-card {
+    cursor: pointer;
+  }
+}
+
 /* Reality brand tokens (same values as the club dashboard). */
 @theme {
   --color-brand: #007aff;
@@ -970,6 +986,151 @@ html {
   .ph-rise,
   .ph-photo img {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Feature marquee: two rows of cards drifting under the court hero.
+   --------------------------------------------------------------------------- */
+.mq {
+  --mq-dir: -1;
+  display: grid;
+  gap: 14px;
+}
+[dir='rtl'] .mq {
+  --mq-dir: 1;
+}
+.mq-row {
+  overflow: hidden;
+  padding-block: 4px;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+.mq-track {
+  display: flex;
+  width: max-content;
+  gap: 14px;
+  animation: mq-slide calc(var(--mq-n) * 7s) linear infinite;
+}
+.mq-track.mq-reverse {
+  animation-direction: reverse;
+}
+.mq:hover .mq-track {
+  animation-play-state: paused;
+}
+@keyframes mq-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* one copy plus one gap, so the second copy lands exactly where the first began */
+    transform: translateX(calc(var(--mq-dir) * (50% + 7px)));
+  }
+}
+.mq-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 300px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(190, 226, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    border-color 0.4s var(--ease-out-soft),
+    background-color 0.4s var(--ease-out-soft);
+}
+.mq-card:hover {
+  border-color: rgba(190, 226, 255, 0.26);
+  background-color: rgba(0, 122, 255, 0.06);
+}
+.mq-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(235, 244, 255, 0.8);
+}
+.mq-icon-x {
+  background: rgba(0, 122, 255, 0.16);
+  color: var(--color-brand-light);
+}
+.mq-tag {
+  flex: none;
+  border-radius: 6px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-brand-light);
+  background: rgba(0, 122, 255, 0.18);
+}
+@media (min-width: 1024px) {
+  .mq-card {
+    width: 340px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mq-row {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mq-track {
+    animation: none;
+  }
+  .mq-card[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Why Reality cards: a hairline that warms to brand blue on hover, a soft lift.
+   --------------------------------------------------------------------------- */
+.why-card {
+  position: relative;
+  isolation: isolate;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, #fff 0%, #f7faff 100%);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 40px -30px rgba(0, 61, 142, 0.35);
+  transition:
+    transform 0.5s var(--ease-out-soft),
+    border-color 0.5s var(--ease-out-soft),
+    box-shadow 0.5s var(--ease-out-soft);
+}
+/* brand line along the top edge, brightest at the start */
+.why-card::before {
+  content: '';
+  position: absolute;
+  inset-inline: 24px;
+  top: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-brand), rgba(0, 122, 255, 0));
+  opacity: 0.55;
+  transition: opacity 0.5s var(--ease-out-soft);
+}
+[dir='rtl'] .why-card::before {
+  background: linear-gradient(270deg, var(--color-brand), rgba(0, 122, 255, 0));
+}
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 122, 255, 0.28);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 28px 56px -30px rgba(0, 61, 142, 0.5);
+}
+.why-card:hover::before {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-card:hover {
+    transform: none;
   }
 }
 

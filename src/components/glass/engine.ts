@@ -450,10 +450,12 @@ export function createGlassScene(canvas: HTMLCanvasElement, svgText: string, rtl
     const portrait = clamp((1.0 - aspect) / 0.25, 0, 1);
     const side = rtl ? -1 : 1;
     // Landscape: object on the far side from the text column; portrait: upper half.
-    objectX = side * 1.75 * (1 - portrait);
-    objectY = portrait * 1.15;
-    spread = lerp(1, 0.6, portrait);
-    camera.position.z = lerp(6.2, 9.4, portrait);
+    // Landscape sits a touch low and further back, so the mark and its scattered pieces
+    // clear the fixed nav and never crop on a laptop-height screen.
+    objectX = side * 1.95 * (1 - portrait);
+    objectY = lerp(-0.18, 1.15, portrait);
+    spread = lerp(0.85, 0.6, portrait);
+    camera.position.z = lerp(7.6, 9.4, portrait);
   };
   layout();
 

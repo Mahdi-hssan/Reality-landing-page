@@ -82,15 +82,8 @@ export function Footer({ dict, navDict, appDict, lang }: FooterProps) {
 
         <div className="my-12 h-px bg-white/10" />
 
-        {/* Row 2: link columns, with the wordmark as an outline behind them (tablet and up) */}
-        <div className="relative isolate">
-        <p
-          aria-hidden="true"
-          dir="ltr"
-          className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 hidden -translate-y-1/2 select-none text-center font-display text-[19vw] font-medium leading-none tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(190,226,255,0.14)] md:block lg:text-[13rem]"
-        >
-          REALITY
-        </p>
+        {/* Row 2: link columns */}
+        <div>
         <nav
           aria-label={dict.nav}
           className="grid grid-cols-2 gap-x-6 gap-y-10 text-center sm:grid-cols-3 sm:text-start"

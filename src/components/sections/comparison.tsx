@@ -1,6 +1,7 @@
-import { Check, ChevronDown, Minus, Sparkles, X } from 'lucide-react';
+import { Check, Minus, X } from 'lucide-react';
 import { Glass } from '../glass';
 import { Logo } from '../logo';
+import { EXCLUSIVE_ICONS } from '../feature-icons';
 import { COMPARISON_VALUES } from '@/content/site';
 import type { Dictionary } from '@/content/dictionaries/fr';
 
@@ -29,10 +30,9 @@ function Mark({ v, note, dict }: { v: 0 | 0.5 | 1; note?: string; dict: WhyDict 
   );
 }
 
-export function Comparison({ dict, showTable }: { dict: WhyDict; showTable: string }) {
+export function Comparison({ dict }: { dict: WhyDict }) {
   return (
-    <section id="pourquoi" className="relative overflow-hidden bg-white py-24 sm:py-32">
-
+    <section id="pourquoi" className="relative overflow-hidden bg-white py-24 sm:py-28">
       <div className="relative mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-medium text-slate-500">{dict.eyebrow}</p>
@@ -40,29 +40,37 @@ export function Comparison({ dict, showTable }: { dict: WhyDict; showTable: stri
           <p className="mt-5 text-lg text-slate-600">{dict.lead}</p>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {dict.exclusives.map((e) => (
-            <div key={e.title} className="rounded-2xl border border-slate-200 bg-white p-5">
-              <span className="inline-flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1 text-[11px] font-medium tracking-wider text-white">
-                <Sparkles className="size-3" /> {dict.exclusive}
-              </span>
-              <p className="mt-4 font-medium text-slate-900">{e.title}</p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{e.text}</p>
-            </div>
-          ))}
-        </div>
+        {/* What only Reality does: three across, then two wider, so no card gets squeezed. */}
+        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          {dict.exclusives.map((e, i) => {
+            const Icon = EXCLUSIVE_ICONS[i] ?? EXCLUSIVE_ICONS[0];
+            const last = i === dict.exclusives.length - 1;
+            return (
+              <li
+                key={e.title}
+                className={`why-card group ${i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'} ${last ? 'sm:col-span-2 lg:col-span-3' : ''}`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid size-11 place-items-center rounded-2xl bg-brand/[0.08] text-brand ring-1 ring-inset ring-brand/15 transition duration-500 group-hover:bg-brand group-hover:text-white">
+                    <Icon className="size-5" strokeWidth={1.8} />
+                  </span>
+                  <span className="rounded-full border border-brand/20 bg-white px-2.5 py-0.5 text-xs font-medium text-brand">
+                    {dict.exclusive}
+                  </span>
+                </div>
+                <p className="mt-6 font-display text-lg font-medium text-slate-900">{e.title}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-slate-600">{e.text}</p>
+              </li>
+            );
+          })}
+        </ul>
 
-        {/* The full table stays one click away, so the section reads in one screen. */}
-        <details className="group mt-10 [&_summary::-webkit-details-marker]:hidden">
-          <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-brand/25 bg-white px-5 py-3 text-sm font-semibold text-brand transition hover:border-brand/50 hover:bg-brand/[0.04]">
-            {showTable}
-            <ChevronDown className="size-4 transition duration-300 group-open:rotate-180" />
-          </summary>
+        {/* The full table, open by default. */}
         <Glass
           radius={28}
           material="thin"
           subtle
-          className="mt-8 overflow-hidden rounded-[28px] border border-white/80 bg-white/60 shadow-[0_30px_90px_-30px_rgba(0,61,142,0.35)]"
+          className="mt-12 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/70 shadow-[0_30px_90px_-30px_rgba(0,61,142,0.35)]"
         >
           <table className="w-full text-start text-sm">
             <caption className="sr-only">{dict.tableCaption}</caption>
@@ -102,7 +110,6 @@ export function Comparison({ dict, showTable }: { dict: WhyDict; showTable: stri
           </table>
         </Glass>
         <p className="mt-4 text-center text-xs text-slate-400">{dict.footnote}</p>
-        </details>
       </div>
     </section>
   );

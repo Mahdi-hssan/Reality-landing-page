@@ -3,6 +3,7 @@ import { AudienceSwitch } from '@/components/audience-switch';
 import { JsonLd } from '@/components/json-ld';
 import { Nav } from '@/components/nav';
 import { Hero } from '@/components/sections/hero';
+import { FeatureMarquee } from '@/components/sections/feature-marquee';
 import { CourtHero } from '@/components/sections/court-hero';
 import { GlassChapter } from '@/components/sections/glass-chapter';
 import { SportsSection } from '@/components/sections/sports';
@@ -34,11 +35,17 @@ export default async function Home({ params }: PageProps<'/[lang]'>) {
       <Nav dict={dict.nav} locale={lang} audience="clubs" />
       <main>
         <CourtHero dict={dict.hero} switcher={<AudienceSwitch dict={dict.nav.audience} lang={lang} active="clubs" />} />
-        <Hero dict={dict.hero} part={dict.parts.clubs} browserTitle={dict.browserTitle} screens={screens} />
+        <Hero
+          dict={dict.hero}
+          part={dict.parts.clubs}
+          browserTitle={dict.browserTitle}
+          screens={screens}
+          marquee={<FeatureMarquee tour={dict.tour} why={dict.why} />}
+        />
         <GlassChapter dict={dict.glass} rtl={lang === 'ar'} />
         <FeatureTour dict={dict.tour} browserTitle={dict.browserTitle} screens={screens} />
+        <Comparison dict={dict.why} />
         <SportsSection dict={dict.sports} />
-        <Comparison dict={dict.why} showTable={dict.parts.compare} />
         <Premium dict={dict.premium} />
         {/* Pricing hidden for now. Restore with: <Pricing dict={dict.pricing} /> */}
         <Faq dict={dict.faq} />

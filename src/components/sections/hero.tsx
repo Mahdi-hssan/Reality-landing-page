@@ -6,16 +6,22 @@ import { PartHead } from '../part-head';
 import type { Dictionary } from '@/content/dictionaries/fr';
 import type { ScreenSet } from '@/content/screens';
 
-type HeroProps = { dict: Dictionary['hero']; part: Dictionary['parts']['clubs']; browserTitle: string; screens: ScreenSet };
+type HeroProps = {
+  dict: Dictionary['hero'];
+  part: Dictionary['parts']['clubs'];
+  browserTitle: string;
+  screens: ScreenSet;
+  /** Full-bleed strip shown first, right where the court hero hands off. */
+  marquee?: React.ReactNode;
+};
 
 /** Opens part one (for facilities): the chapter title, then the club workspace itself. */
-export function Hero({ dict, part, browserTitle, screens }: HeroProps) {
+export function Hero({ dict, part, browserTitle, screens, marquee }: HeroProps) {
   return (
     <section id="clubs" aria-labelledby="clubs-title" className="relative z-10 scroll-mt-4 bg-night pb-24 pt-6 text-white sm:pb-32">
       {/* Fade that rises over the last part of the pinned court, so the hand-off has no seam. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-[38vh] h-[38vh] bg-gradient-to-b from-night/0 to-night" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      </div>
+      {marquee}
 
       <div className="relative mx-auto max-w-6xl px-4">
         <div className="reveal-rise mx-auto max-w-3xl pt-10 text-center">
