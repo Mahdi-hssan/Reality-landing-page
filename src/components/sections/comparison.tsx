@@ -48,17 +48,12 @@ export function Comparison({ dict }: { dict: WhyDict }) {
             return (
               <li
                 key={e.title}
-                className={`why-card group ${i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'} ${last ? 'sm:col-span-2 lg:col-span-3' : ''}`}
+                className={`why-card ${i < 3 ? 'lg:col-span-2' : 'lg:col-span-3'} ${last ? 'sm:col-span-2 lg:col-span-3' : ''}`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <span className="grid size-11 place-items-center rounded-2xl bg-brand/[0.08] text-brand ring-1 ring-inset ring-brand/15 transition duration-500 group-hover:bg-brand group-hover:text-white">
-                    <Icon className="size-5" strokeWidth={1.8} />
-                  </span>
-                  <span className="rounded-full border border-brand/20 bg-white px-2.5 py-0.5 text-xs font-medium text-brand">
-                    {dict.exclusive}
-                  </span>
-                </div>
-                <p className="mt-6 font-display text-lg font-medium text-slate-900">{e.title}</p>
+                <span className="grid size-10 place-items-center rounded-xl bg-slate-100 text-slate-600">
+                  <Icon className="size-[18px]" strokeWidth={1.5} />
+                </span>
+                <p className="mt-5 font-display text-lg font-medium text-slate-900">{e.title}</p>
                 <p className="mt-2 text-[15px] leading-relaxed text-slate-600">{e.text}</p>
               </li>
             );
@@ -70,7 +65,7 @@ export function Comparison({ dict }: { dict: WhyDict }) {
           radius={28}
           material="thin"
           subtle
-          className="mt-12 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/70 shadow-[0_30px_90px_-30px_rgba(0,61,142,0.35)]"
+          className="mt-12 overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/70 shadow-[0_24px_48px_-32px_rgba(15,23,42,0.25)]"
         >
           <table className="w-full text-start text-sm">
             <caption className="sr-only">{dict.tableCaption}</caption>

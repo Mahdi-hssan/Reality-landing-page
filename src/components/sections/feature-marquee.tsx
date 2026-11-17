@@ -41,8 +41,8 @@ function Row({ cards, reverse }: { cards: Card[]; reverse?: boolean }) {
         {[0, 1].map((copy) =>
           cards.map((c) => (
             <li key={`${copy}-${c.key}`} className="mq-card" aria-hidden={copy === 1 || undefined}>
-              <span className={`mq-icon${c.tag ? ' mq-icon-x' : ''}`}>
-                <c.Icon className="size-[18px]" strokeWidth={1.8} />
+              <span className="mq-icon">
+                <c.Icon className="size-[18px]" strokeWidth={1.5} />
               </span>
               <span className="min-w-0">
                 <span className="flex items-center gap-2">
